@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expence Tracker</title>
+</head>
+<style >
+
+
+*{
+    background-color:black;
+ 
+   
+}      
+   
+
+
+body{
+    background-color:rgb(26, 49, 26);
+    text-decoration-color: white;
+    text-align: center;
+    
+}
+
+#container{
+    text-align: center;
+    font-size: 20%;
+    font-size: medium;
+    color:#d35400;
+
+}
+   
+    #container>div{
+        border: 1px solid rgb(160, 8, 8);
+       
+        
+    }
+.btn{
+    padding: 50px;
+    width: 10px;
+}
+#container{
+    display: grid;
+    
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    
+ 
+}
+
+
+</style>
+<body>
+    
+    <center>
+    <form id="form" onsubmit="store(event)">
+    <label style="color:red ;">Choose Expense:</label> <br>
+
+    <input style="color:white" type="number" id="num" placeholder="Enter the amount"/><br>
+
+    <label style="color:red ;" >choose Discription:</label><br>
+
+    <input style="color:white" type="text" id="name" placeholder="Enter the Description"/><br>
+
+    <label style="color:red ;">Choose category</label><br>
+
+    <select style="color:yellowgreen" id="category">
+        <option value="fuel">Fuel</option>
+        <option value="food">food</option>
+        <option value="Car">Car</option>
+        <option value="Mobile">Mobile</option>
+    </select>
+    <input style="color: green; background-color: white;" type="Submit">
+
+    </form>
+    <div id="container"></div>
+</center>
+    <script>
+
+        function store(event){
+    
+            event.preventDefault();
+           let num=document.getElementById("num").value;
+           let name=document.getElementById("name").value;
+           let cat=document.getElementById("category").value;
+           let data= new Person(num,name,cat);
+    
+           arr.push(data)
+           localStorage.setItem("storage",JSON.stringify(arr))
+      
+             
+        }
+      
+     
+       var arr=[]
+        function Person(a,b,c){
+            this.num=a,
+            this.name=b,
+            this.cat=c
+        }
+        var arr=JSON.parse(localStorage.getItem("storage"))||[]
+    
+        console.log(arr);
+    
+       arr.forEach((el,index) => {
+        let div =document.createElement("div")
+        let num=document.createElement("li")
+        num.innerText=`Expence: ${el.num}`;
+    
+        let name=document.createElement("li")
+        name.innerText=`Discription: ${el.name}`;
+    
+        let cat=document.createElement("li")
+        cat.innerText=`Category: ${el.cat}`;
+    
+    let btn=document.createElement("button")
+     btn.innerText="Remove"
+
+     btn.addEventListener("click",function(){
+
+        removeItem(el, index)
+     })
+      let btn2= document.createElement("button")
+      
+   
+   
+      btn2.innerText="Edit"
+
+      btn.style.margin="26px"
+     
+
+      btn.style.backgroundColor="white"
+
+      btn2.style.backgroundColor="white"
+
+        div.append(num,name,cat,btn,btn2)
+    
+        document.getElementById("container").append(div);
+
+        function removeItem(el, index){
+
+            arr.splice(1, index)
+
+            window.location.reload()
+
+           localStorage.setItem("storage",JSON.stringify(arr))
+        }
+        
+    
+       });
+    </script>
+</body>
+</html>
